@@ -12,7 +12,7 @@ import model.modelfactory as mf
 import utils.utils as utils
 from experiment.experiment import experiment
 from model.meta_learner import MetaLearingClassification
-from model.learner import Learner
+import model.learner as Learner
 logger = logging.getLogger('experiment')
 
 # 筛选数据集，每类保留 num_per_class 张图片，返回 MNIST 类型
