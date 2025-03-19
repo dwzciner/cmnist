@@ -7,7 +7,7 @@ class Parser(configargparse.ArgParser):
         self.add('-c', '--my-config', is_config_file=True, default="configs/regression/empty.ini",
                  help='config file path')
         #
-        self.add('--steps', type=int, help='epoch number', default=30)
+        self.add('--steps', type=int, help='epoch number', default=2)
         self.add('--gpus', type=int, help='meta-level outer learning rate', default=1)
         self.add('--rank', type=int, help='meta batch size, namely task num', default=0)
         self.add('--tasks', nargs='+', type=int, help='meta batch size, namely task num', default=[3])

@@ -389,8 +389,11 @@ class MetaLearingClassification(nn.Module):
         adaptation_weight_counter = 0
 
         logits, p = self.net(x, fast_weights)
+
+        fast_weights_norm = fast_weights.norm().pow(2)
+
         # TODO L2norm
-        loss = F.cross_entropy(logits, y)
+        loss = F.cross_entropy(logits, y) + 0.001 * fast_weights_norm
         scale = torch.tensor(1.).cuda().requires_grad_()
         loss_scale = F.cross_entropy(logits * scale, y)
         grad_scale = torch.autograd.grad(loss_scale, [scale], create_graph=True)[0]
