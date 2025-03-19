@@ -390,7 +390,11 @@ class MetaLearingClassification(nn.Module):
 
         logits, p = self.net(x, fast_weights)
 
-        fast_weights_norm = fast_weights.norm().pow(2)
+        fast_weights_norm = torch.tensor(0.).cuda()
+
+        if fast_weights is not None:
+            for w in fast_weights:
+                fast_weights_norm += w.norm().pow(2)
 
         # TODO L2norm
         loss = F.cross_entropy(logits, y) + 0.001 * fast_weights_norm
