@@ -36,11 +36,11 @@ def filter_mnist(dataset, num_per_class=20):
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Lambda(lambda x: x.repeat(3, 1, 1)),  # 复制 3 次变成 RGB
-    transforms.Lambda(lambda x: x * torch.tensor([1.0, 0.1, 0.1]).view(3, 1, 1)),  # 颜色变换
+    transforms.Lambda(lambda x: x * torch.tensor([0.3, 1.0, 1.0]).view(3, 1, 1)),  # 颜色变换
 ])
 
 # 加载 MNIST 训练集
-mnist_train = datasets.MNIST(root="./data", train=True, download=True, transform=transform)
+mnist_train = datasets.MNIST(root="../data", train=True, download=True, transform=transform)
 mnist_train = filter_mnist(mnist_train,20)
 # 创建 DataLoader
 iterator_train = torch.utils.data.DataLoader(mnist_train, batch_size=5, shuffle=True)

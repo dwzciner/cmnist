@@ -106,6 +106,7 @@ class Learner(nn.Module):
 
 
             elif name == 'linear':
+                p = x
                 w, b = vars[idx], vars[idx + 1]
                 x = F.linear(x, w, b)
                 idx += 2
@@ -114,7 +115,8 @@ class Learner(nn.Module):
                 # print(f"{layer_counter} x.shape {x.shape}")
 
             elif name == 'flatten':
-                x = x.view(x.size(0), -1)
+                # 不展平通道
+                x = x.view(x.size(0),x.size(1), -1)
                 # print(f"{layer_counter} x.shape {x.shape}")
 
             elif name == 'rotate':
@@ -129,8 +131,8 @@ class Learner(nn.Module):
 
             elif name == 'rep':
                 #print(f"{layer_counter} x.shape {x.shape}")
+                x = x.reshape(x.size(0), -1)
 
-                p = x
                 # print("获取特征p")
                 self.m = x.shape[0]
                 if rep:
@@ -138,6 +140,7 @@ class Learner(nn.Module):
 
             elif name == 'relu':
                 x = F.relu(x)
+
                 # print(f"{layer_counter} x.shape {x.shape}")
 
 

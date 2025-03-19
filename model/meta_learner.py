@@ -396,6 +396,7 @@ class MetaLearingClassification(nn.Module):
             for w in fast_weights:
                 fast_weights_norm += w.norm().pow(2)
 
+
         # TODO L2norm
         loss = F.cross_entropy(logits, y) + 0.001 * fast_weights_norm
         scale = torch.tensor(1.).cuda().requires_grad_()

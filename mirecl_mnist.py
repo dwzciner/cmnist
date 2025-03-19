@@ -52,9 +52,9 @@ class RepeatChannel:
         self.train = train
     def __call__(self, x):
         if self.train:
-            return x.repeat(3, 1, 1) * torch.tensor([0.1, 0.1, 1.0]).view(3, 1, 1)
-        else:
             return x.repeat(3, 1, 1) * torch.tensor([1.0, 0.1, 0.1]).view(3, 1, 1)
+        else:
+            return x.repeat(3, 1, 1) * torch.tensor([0.1, 0.1, 1.0]).view(3, 1, 1)
 
 def load_model(args, config):
     if args['model_path'] is not None:
@@ -190,10 +190,10 @@ def main():
         accs, loss = maml(x_spt, y_spt, x_qry, y_qry)
         writer.add_scalar('/metatrain/train/loss', loss[-1], step)
         # Evaluation during training for sanity checks
-        if step % 10 == 5:
-            writer.add_scalar('/metatrain/train/accuracy', accs[-1], step)
 
-            logger.info('step: %d \t training acc %s', step, str(accs))
+        writer.add_scalar('/metatrain/train/accuracy', accs[-1], step)
+
+        logger.info('step: %d \t training acc %s', step, str(accs))
         if step % 20 == 3:
             # utils.log_accuracy(maml, my_experiment, iterator_test, device, writer, step)
             utils.log_accuracy(maml, my_experiment, iterator_train, device, writer, step)
